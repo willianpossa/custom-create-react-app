@@ -41,4 +41,22 @@ const createReactApp = () => {
     });
 }
 
+const cdIntoNewApp = () => {
+    return new Promise(resolve => {
+        shell.exec(`cd ${ appName }`, () => { resolve });
+    });
+}
+
+const installPackages = () => {
+    return new Promise(resolve => {
+        console.log('\n Falta pouco, me deixa pensar! Estou instalando umas paradinhas legais pra você.');
+
+        shell.exec(`yarn add redux react-redux redux-thunk react-router react-router-dom`, () => {
+            console.log('\n Falei que faltava pouco. Prontinho meu bom, tudo instalado pra você.'.green);
+
+            resolve();
+        });
+    });
+}
+
 run();
