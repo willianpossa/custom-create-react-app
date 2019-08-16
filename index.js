@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 
-const shell = require('shelljs');
-const colors = require('colors');
-const fs = require('fs');
+let shell = require('shelljs');
+let colors = require('colors');
+let fs = require('fs');
 
 let appName = process.argv[2];
 let appDirectory = `${ process.cwd() }/${ appName }`;
+
+let templates = require('./templates.js');
 
 const run = async() => {
     let success = await createReactApp();
@@ -26,7 +28,7 @@ const run = async() => {
 const createReactApp = () => {
     return new Promise(resolve => {
         if(appName) {
-            shell.exec(`Criar novo projeto react ${ appName }`, () => {
+            shell.exec(`create-react-app ${ appName }`, () => {
                 console.log('Projeto criado!');
 
                 resolve(true);
@@ -51,11 +53,30 @@ const installPackages = () => {
     return new Promise(resolve => {
         console.log('\n Falta pouco, me deixa pensar! Estou instalando umas paradinhas legais pra você.');
 
-        shell.exec(`yarn add redux react-redux redux-thunk react-router react-router-dom`, () => {
-            console.log('\n Falei que faltava pouco. Prontinho meu bom, tudo instalado pra você.'.green);
+        shell.exec(`yarn add react-router react-router-dom axios node-sass prop-types node-sass-glob-importer react-throttle`, () => {
+            console.log('\n Falei que faltava pouco. Prontinho, tudo instalado pra você.'.green);
 
             resolve();
         });
+    });
+}
+
+const updateTemplates = () => {
+    return new Promise(resolve => {
+        let promises = [];
+
+        Object.keys(templates).forEach((fileName, i) => {
+            promises[i] = new Promise(res => {
+                fs.writeFile(`${ appDirectory }/src/${ fileName }`, templates[fileName], function(err) {
+                    if(err)
+                        return console.log(err)
+
+                    res();
+                });
+            });
+        });
+
+        Promise.all(promises).then(() => resolve() )
     });
 }
 
