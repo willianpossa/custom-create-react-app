@@ -1,14 +1,13 @@
-module.exports = `
-    import React from 'react';
+module.exports = `import React from 'react';
 
-    const App = () => {
+const App = () => {
 
-        return (
-            <div>
-                Bom dia, boa tarde e boa noite! Bem-vindo ao seu App.
-            </div>
-        );
-    }
+    return (
+        <div>
+            Bom dia, boa tarde e boa noite! Bem-vindo ao seu App.
+        </div>
+    );
+}
 
-    export default App;
+export default App;
 `

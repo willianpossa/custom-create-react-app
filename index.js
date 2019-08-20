@@ -13,7 +13,7 @@ const run = async() => {
     let success = await createReactApp();
 
     if(!success) {
-        console.log('Opaaa Campeão... Alguma coisa deu errado por aqui!'.red);
+        shell.echo('Opaaa Campeão... Alguma coisa deu errado por aqui!'.red);
         
         return false;
     }
@@ -22,21 +22,25 @@ const run = async() => {
     await installPackages();
     await updateTemplates();
 
-    console.log('É isso rapazeada! Tá tudo prontinho!');
+    shell.echo('É isso rapazeada! Tá tudo prontinho!'.green);
+
+    shell.echo('\n\nEstou te transferindo para a pasta do projeto e já estou inicializando ela pra você :)'.green);
+
+    shell.exec(`cd ${ appName } && yarn start`);
 }
 
 const createReactApp = () => {
     return new Promise(resolve => {
         if(appName) {
             shell.exec(`create-react-app ${ appName }`, () => {
-                console.log('Projeto criado!');
+                shell.echo('Projeto criado!'.green);
 
                 resolve(true);
             });
         } else {
-            console.log('\n O Nome do projeto não foi informado.'.red);
-            console.log('\n Informe um nome de projeto no seguinte formato: ');
-            console.log('\n wj-create-react-app', 'nome-do-projeto\n'.cyan);
+            shell.echo('\n O Nome do projeto não foi informado.'.red);
+            shell.echo('\n Informe um nome de projeto no seguinte formato: ');
+            shell.echo('\n wj-create-react-app', 'nome-do-projeto\n'.cyan);
 
             resolve(false);
         }
@@ -45,16 +49,19 @@ const createReactApp = () => {
 
 const cdIntoNewApp = () => {
     return new Promise(resolve => {
-        shell.exec(`cd ${ appName }`, () => { resolve });
+        shell.exec(`cd ${ appName }`, () => { 
+            resolve(true); 
+        });
     });
 }
 
 const installPackages = () => {
     return new Promise(resolve => {
-        console.log('\n Falta pouco, me deixa pensar! Estou instalando umas paradinhas legais pra você.');
+        shell.echo('\nFalta pouco, me deixa pensar! Estou instalando umas paradinhas legais pra você.'.green);
 
         shell.exec(`yarn add react-router react-router-dom axios node-sass prop-types node-sass-glob-importer react-throttle`, () => {
-            console.log('\n Falei que faltava pouco. Prontinho, tudo instalado pra você.'.green);
+            shell.echo('\nFalei que faltava pouco.'.green);
+            shell.echo('\nProntinho, tudo instalado pra você.'.green);
 
             resolve();
         });
@@ -69,7 +76,7 @@ const updateTemplates = () => {
             promises[i] = new Promise(res => {
                 fs.writeFile(`${ appDirectory }/src/${ fileName }`, templates[fileName], function(err) {
                     if(err)
-                        return console.log(err)
+                        return shell.echo(`${ err }`.red)
 
                     res();
                 });
