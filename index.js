@@ -8,6 +8,8 @@ let appName = process.argv[2];
 let appDirectory = `${ process.cwd() }/${ appName }`;
 
 let templates = require('./templates.js');
+let servicesTemplates = require('./templates/Services/templates.js');
+let routesTemplates = require('./templates/Routes/templates.js');
 
 const run = async() => {
     let success = await createReactApp();
@@ -21,6 +23,8 @@ const run = async() => {
     await cdIntoNewApp();
     await installPackages();
     await updateTemplates();
+    await createFolder(servicesTemplates, 'Services');
+    await createFolder(routesTemplates, 'Routes');
 
     shell.echo('É isso rapazeada! Tá tudo prontinho!'.green);
 
@@ -85,6 +89,35 @@ const updateTemplates = () => {
 
         Promise.all(promises).then(() => resolve() )
     });
+};
+
+const createFolder = (templates, folderName) => {
+    const dir = `${ appDirectory }/src/${ folderName }`;
+
+    try {
+        if(!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+
+        return new Promise(resolve => {
+            let promises = [];
+    
+            Object.keys(templates).forEach((fileName, i) => {
+                promises[i] = new Promise(res => {
+                    fs.writeFile(`${ appDirectory }/src/${ folderName }/${ fileName }`, templates[fileName], function(err) {
+                        if(err)
+                            return shell.echo(`${ err }`.red);
+    
+                        res();
+                    })
+                })
+            });
+    
+            Promise.all(promises).then(_ => resolve());
+        });
+    } catch(err) {
+        shell.echo(`${ err }`.red);
+    }
 }
 
 run();
