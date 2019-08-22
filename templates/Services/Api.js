@@ -6,7 +6,7 @@ const headers = {
 };
 
 const API = axios.create({
-    baseURL: /* PUT YOUR URL HERE! */,
+    baseURL: 'https://jsonplaceholder.typicode.com',
     headers
 });
 

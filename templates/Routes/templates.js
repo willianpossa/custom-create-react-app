@@ -1,12 +1,12 @@
 module.exports = {
     'index.js': require('./index.js'),
 
-    'Auth.js': require('./Paths/Auth.js'),
-    'Public.js': require('./Paths/Public.js'),
+    'Paths/Auth.js': require('./Paths/Auth.js'),
+    'Paths/Public.js': require('./Paths/Public.js'),
 
-    'Authenticate.jsx': require('./Layouts/Authenticate.jsx'),
-    'Public.jsx': require('./Layouts/Public.jsx'),
+    'Layouts/Authenticate.jsx': require('./Layouts/Authenticate.jsx'),
+    'Layouts/Public.jsx': require('./Layouts/Public.jsx'),
 
-    'Authenticate.jsx': require('./Bases/Authenticate.jsx'),
-    'Public.jsx': require('./Bases/Public.jsx'),
+    'Bases/Authenticate.jsx': require('./Bases/Authenticate.jsx'),
+    'Bases/Public.jsx': require('./Bases/Public.jsx'),
 };

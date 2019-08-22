@@ -8,8 +8,15 @@ let appName = process.argv[2];
 let appDirectory = `${ process.cwd() }/${ appName }`;
 
 let templates = require('./templates.js');
+
 let servicesTemplates = require('./templates/Services/templates.js');
+
 let routesTemplates = require('./templates/Routes/templates.js');
+let routesFolders = require('./templates/Routes/folders.js');
+
+let pagesTemplates = require('./templates/Pages/templates.js');
+
+let requestsTemplates = require('./templates/Requests/templates.js');
 
 const run = async() => {
     let success = await createReactApp();
@@ -23,8 +30,13 @@ const run = async() => {
     await cdIntoNewApp();
     await installPackages();
     await updateTemplates();
-    await createFolder(servicesTemplates, 'Services');
-    await createFolder(routesTemplates, 'Routes');
+
+    await createFolderTemplates(routesFolders, 'Routes');
+
+    // await createFileTemplates(servicesTemplates, 'Services');
+    await createFileTemplates(routesTemplates, 'Routes');
+    // await createFileTemplates(pagesTemplates, 'Pages');
+    // await createFileTemplates(requestsTemplates, 'Requests');
 
     shell.echo('É isso rapazeada! Tá tudo prontinho!'.green);
 
@@ -91,7 +103,35 @@ const updateTemplates = () => {
     });
 };
 
-const createFolder = (templates, folderName) => {
+const createFolderTemplates = (subFolders, folderName) => {
+    const dir = `${ appDirectory }/src/${ folderName }`;
+
+    try {
+        if(!fs.existsSync(dir)) {
+            fs.mkdirSync(dir);
+        }
+
+        return new Promise(resolve => {
+            let promises = [];
+
+            subFolders.forEach((folderName, i) => {
+                if(!fs.existsSync(`${ dir }/${ folderName }`)) {
+                    promises[i] = new Promise(res => {
+                        fs.mkdirSync(`${ dir }/${ folderName }`);
+
+                        res();
+                    });
+                }
+            });
+
+            Promise.all(promises).then(_ => resolve());
+        });
+    } catch (err) {
+        shell.echo(`${ err }`.red);   s
+    }
+}
+
+const createFileTemplates = (templates, folderName) => {
     const dir = `${ appDirectory }/src/${ folderName }`;
 
     try {
