@@ -33,10 +33,10 @@ const run = async() => {
 
     await createFolderTemplates(routesFolders, 'Routes');
 
-    // await createFileTemplates(servicesTemplates, 'Services');
+    await createFileTemplates(servicesTemplates, 'Services');
+    await createFileTemplates(pagesTemplates, 'Pages');
+    await createFileTemplates(requestsTemplates, 'Requests');
     await createFileTemplates(routesTemplates, 'Routes');
-    // await createFileTemplates(pagesTemplates, 'Pages');
-    // await createFileTemplates(requestsTemplates, 'Requests');
 
     shell.echo('É isso rapazeada! Tá tudo prontinho!'.green);
 

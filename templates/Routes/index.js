@@ -34,9 +34,9 @@ class Routes extends Component {
                         route => <PublicRoute key={ route.path } { ...route } layout={ PublicLayout } />
                     )}
 
-                    <Route path="*" render={() => {
+                    <Route path="*" render={(props) => (
                         <h1>404 - Página não encontrada</h1>
-                    }} />
+                    )} />
                 </Switch>
             </BrowserRouter>
         );

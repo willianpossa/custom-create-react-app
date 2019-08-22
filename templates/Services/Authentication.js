@@ -1,4 +1,4 @@
-module.exports = `export const TOKEN_KEY = /* PUT YOUR TOKEN KEY HERE */;
+module.exports = `export const TOKEN_KEY = '@TOKEN_SAMPLE';
 
 export const isAuthenticated = _ => {
     return localStorage.getItem(TOKEN_KEY) !== null;

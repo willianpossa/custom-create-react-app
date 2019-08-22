@@ -1,10 +1,11 @@
 module.exports = `import React from 'react';
+import Routes from './Routes';
 
 const App = () => {
 
     return (
-        <div>
-            Bom dia, boa tarde e boa noite! Bem-vindo ao seu App.
+        <div className="router-holder">
+            <Routes />
         </div>
     );
 }
