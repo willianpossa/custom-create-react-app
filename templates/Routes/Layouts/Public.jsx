@@ -3,7 +3,13 @@ module.exports = `import React from 'react';
 const PublicLayout = (props) => {
     return (
         <div className="public-layout">
-            { props.children }
+            { props.header }
+
+            <div className="content-holder">
+                { props.children }
+            </div>
+
+            { props.footer }
         </div>
     );
 }

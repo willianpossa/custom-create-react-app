@@ -20,6 +20,9 @@ let requestsTemplates = require('./templates/Requests/templates.js');
 
 let utilsTemplates = require('./templates/Utils/templates.js');
 
+let componentsFolders = require('./templates/Components/folders.js');
+let componentTemplates = require('./templates/Components/templates.js');
+
 const run = async() => {
     let success = await createReactApp();
 
@@ -34,12 +37,14 @@ const run = async() => {
     await updateTemplates();
 
     await createFolderTemplates(routesFolders, 'Routes');
+    await createFolderTemplates(componentsFolders, 'Components');
 
     await createFileTemplates(servicesTemplates, 'Services');
     await createFileTemplates(pagesTemplates, 'Pages');
     await createFileTemplates(requestsTemplates, 'Requests');
     await createFileTemplates(routesTemplates, 'Routes');
     await createFileTemplates(utilsTemplates, 'Utils');
+    await createFileTemplates(componentTemplates, 'Components');
 
     shell.echo('É isso rapazeada! Tá tudo prontinho!'.green);
 
